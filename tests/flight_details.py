@@ -1,22 +1,13 @@
 import pytest
 import time
-from selenium import webdriver
 from pages.flight_details import FlightDetails
 
 
-@pytest.fixture()
-def driver():
-    # Init driver with options
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("useAutomationExtension", False)
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    driver.maximize_window()
-    yield driver
-
-
-def test_flight_details(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_flight_details(initialize_driver):
+    driver = initialize_driver
+    print("Staring test for flight details page")
     # Available All Flights List
     flight_details = FlightDetails(driver)
     # open the main page
@@ -28,8 +19,4 @@ def test_flight_details(driver):
     page_header = driver.title
     time.sleep(3)
     assert page_header == "אישור פרטי הזמנה | איסתא"
-
-
-def teardown_method(driver):
-    time.sleep(10)
-    driver.quit()
+    print("End test for flight details page")

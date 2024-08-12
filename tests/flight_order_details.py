@@ -1,22 +1,12 @@
 import pytest
 import time
-from selenium import webdriver
 from pages.flight_order_details import FlightOrderDetails
 
 
-@pytest.fixture()
-def driver():
-    # Init driver with options
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("useAutomationExtension", False)
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    driver.maximize_window()
-    yield driver
-
-
-def test_order_flight_details_registration(driver):
+@pytest.mark.resgression
+@pytest.mark.usefixtures('initialize_driver')
+def test_order_flight_details_registration(initialize_driver):
+    driver = initialize_driver
     # Registration form
     flight_order_passenger_reg = FlightOrderDetails(driver)
     # open the main page
@@ -26,10 +16,12 @@ def test_order_flight_details_registration(driver):
     flight_order_passenger_reg.remove_ads()
     flight_order_passenger_reg.order_flight_passenger_registration()
     time.sleep(1)
-    # Checked & Passed
 
 
-def test_order_flight_passenger_details(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_order_flight_passenger_details(initialize_driver):
+    driver = initialize_driver
     # Fill th passenger details
     flight_order_passenger_details = FlightOrderDetails(driver)
     # open the main page
@@ -40,10 +32,11 @@ def test_order_flight_passenger_details(driver):
     flight_order_passenger_details.remove_ads()
     flight_order_passenger_details.order_flight_passenger_details()
     time.sleep(1)
-    # Checked & Passed
 
 
-def test_order_flight_additional_services(driver):
+@pytest.mark.usefixtures('initialize_driver')
+def test_order_flight_additional_services(initialize_driver):
+    driver = initialize_driver
     # Services form
     flight_order_additional_service = FlightOrderDetails(driver)
     # open the main page
@@ -53,10 +46,11 @@ def test_order_flight_additional_services(driver):
     flight_order_additional_service.remove_ads()
     flight_order_additional_service.order_flight_services_details()
     time.sleep(1)
-    # Checked & Passed
 
 
-def test_order_flight_order(driver):
+@pytest.mark.usefixtures('initialize_driver')
+def test_order_flight_order(initialize_driver):
+    driver = initialize_driver
     # Order form
     flight_order_order = FlightOrderDetails(driver)
     # open the main page
@@ -66,10 +60,5 @@ def test_order_flight_order(driver):
     flight_order_order.remove_ads()
     flight_order_order.order_flight_order()
     time.sleep(1)
-    # Checked & Passed
 
-
-def teardown_method(driver):
-    time.sleep(10)
-    driver.quit()
 

@@ -1,22 +1,12 @@
 import pytest
 import time
-from selenium import webdriver
 from pages.flight_available_list import FlightList
 
 
-@pytest.fixture()
-def driver():
-    # Init driver with options
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("useAutomationExtension", False)
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    driver.maximize_window()
-    yield driver
-
-
-def test_flights_list_details(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_flights_list_details(initialize_driver):
+    driver = initialize_driver
     # Available All Flights List
     flight_list = FlightList(driver)
     # open the main page
@@ -29,8 +19,3 @@ def test_flights_list_details(driver):
     time.sleep(3)
     page_header = driver.title
     assert page_header == "תוצאות חיפוש מחירי טיסות מתל אביב לאמסטרדם: 01/09/2024 - 11/09/2024 | איסתא"
-
-
-def teardown_method(driver):
-    time.sleep(10)
-    driver.quit()

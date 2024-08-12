@@ -1,34 +1,28 @@
 import pytest
 import time
-from selenium import webdriver
 from pages.flights_form import FLightForm
 
 
-@pytest.fixture()
-def driver():
-    # Init driver with options
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("useAutomationExtension", False)
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    driver.maximize_window()
-    yield driver
-
-
-def test_flights_origin(driver):
-    flLightform = FLightForm(driver)
+# @pytest.mark.skip
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_flights_origin(initialize_driver):
+    driver = initialize_driver
+    flightform = FLightForm(driver)
     # open the main page
-    flLightform.open_page('https://www.issta.co.il/flights')
+    flightform.open_page('https://www.issta.co.il/flights')
     # remove the ads banner if exist
-    flLightform.remove_ads()
+    flightform.remove_ads()
     # set origin
-    actual = flLightform.origin_check()
-    assert actual == flLightform.origin
+    actual = flightform.origin_check()
+    assert actual == flightform.origin
     time.sleep(1)
 
 
-def test_flights_destination(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_flights_destination(initialize_driver):
+    driver = initialize_driver
     flight_form = FLightForm(driver)
     # open the main page
     flight_form.open_page('https://www.issta.co.il/flights')
@@ -40,7 +34,10 @@ def test_flights_destination(driver):
     time.sleep(1)
 
 
-def test_flight_dates(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_flight_dates(initialize_driver):
+    driver = initialize_driver
     flight_form = FLightForm(driver)
     # open the main page
     flight_form.open_page('https://www.issta.co.il/flights')
@@ -51,7 +48,10 @@ def test_flight_dates(driver):
     time.sleep(1)
 
 
-def test_add_adult_passengers(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_add_adult_passengers(initialize_driver):
+    driver = initialize_driver
     flight_form = FLightForm(driver)
     # open the main page
     flight_form.open_page('https://www.issta.co.il/flights')
@@ -62,7 +62,10 @@ def test_add_adult_passengers(driver):
     time.sleep(1)
 
 
-def test_add_young_passengers_check(driver):
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_add_young_passengers_check(initialize_driver):
+    driver = initialize_driver
     flight_form = FLightForm(driver)
     # open the main page
     flight_form.open_page('https://www.issta.co.il/flights')
@@ -73,8 +76,11 @@ def test_add_young_passengers_check(driver):
     time.sleep(1)
 
 
-def test_click_search_wo_parameters(driver):
-    # Test behave hen no parameters are picked
+@pytest.mark.regression
+@pytest.mark.usefixtures('initialize_driver')
+def test_click_search_wo_parameters(initialize_driver):
+    driver = initialize_driver
+    # Test behave with no parameters are picked
     # There are 16 optional cases to check for 4 items.
     # I choose to check the empty case w/o parameters
     flight_form = FLightForm(driver)
@@ -86,7 +92,3 @@ def test_click_search_wo_parameters(driver):
     flight_form.choose_flight_button()
     assert driver.switch_to.alert.text == "* לא נבחר תאריך יציאה\n* לא נבחר תאריך חזרה\n* נא בחר יעד"
 
-
-def teardown_method(driver):
-    time.sleep(10)
-    driver.quit()
