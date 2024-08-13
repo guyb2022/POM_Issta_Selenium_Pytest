@@ -1,8 +1,8 @@
 import pytest
 import time
-from pages.flight_details import FlightDetails
+from Pages.flight_details import FlightDetails
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ def test_flight_details(initialize_driver):
     flight_details = FlightDetails(driver)
     # open the main page
     flight_details.open_page(os.getenv("URL_FLIGHT_DETAILS"))
-    time.sleep(3)
+    time.sleep(5)
     # remove the ads banner if exist
     flight_details.remove_ads()
     flight_details.proceed_to_flights_details()

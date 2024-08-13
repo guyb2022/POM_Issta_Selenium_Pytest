@@ -1,8 +1,8 @@
 import pytest
 import time
-from pages.flight_available_list import FlightList
+from Pages.flight_available_list import FlightList
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 

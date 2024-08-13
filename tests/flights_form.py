@@ -1,8 +1,8 @@
 import pytest
 import time
-from pages.flights_form import FLightForm
+from Pages.flights_form import FLightForm
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 

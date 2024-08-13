@@ -1,8 +1,8 @@
 import pytest
 import time
-from pages.home_page import HomePage
+from Pages.home_page import HomePage
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 

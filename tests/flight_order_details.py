@@ -1,8 +1,8 @@
 import pytest
 import time
-from pages.flight_order_details import FlightOrderDetails
+from Pages.flight_order_details import FlightOrderDetails
 import os
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 
