@@ -1,6 +1,10 @@
 import pytest
 import time
 from pages.home_page import HomePage
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv()
 
 
 @pytest.mark.smoke
@@ -10,7 +14,7 @@ def test_issta_home_page_flights(initialize_driver):
     driver = initialize_driver
     home_page = HomePage(driver)
     # open the main page
-    home_page.open_page('https://www.issta.co.il/')
+    home_page.open_page(os.getenv("URL_BASE"))
     # remove the ads banner if exist
     home_page.remove_ads()
     # click on the flights link

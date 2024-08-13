@@ -22,5 +22,7 @@ class FlightDetails:
             print("No Popup Appeared in here")
 
     def proceed_to_flights_details(self):
+        # The button is on the far edge of the screen, cannot be detected
+        self.driver.execute_script("window.scrollTo(0, 300)")
         WebDriverWait(self.driver, 15).until(
             EC.element_to_be_clickable((self.driver.find_element(*self.flight_details)))).click()

@@ -46,6 +46,7 @@ class FLightForm:
 
     def pick_date(self):
         # The button is on the far edge of the screen, cannot be detected
+        # So we need to scroll down to make it visible
         self.driver.execute_script("window.scrollTo(0, 200)")
         WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((self.driver.find_element(*self.date)))).click()

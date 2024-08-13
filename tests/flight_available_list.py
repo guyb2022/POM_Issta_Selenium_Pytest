@@ -1,6 +1,10 @@
 import pytest
 import time
 from pages.flight_available_list import FlightList
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv()
 
 
 @pytest.mark.regression
@@ -10,7 +14,7 @@ def test_flights_list_details(initialize_driver):
     # Available All Flights List
     flight_list = FlightList(driver)
     # open the main page
-    flight_list.open_page("https://www.issta.co.il/flights/results.aspx?fdate=01/09/24&tdate=11/09/24&route=2&dport=TLV&aport=AMS&padt=1")
+    flight_list.open_page(os.getenv("URL_FLIGHT_AVAILABLE_LIST"))
     time.sleep(3)
     # remove the ads banner if exist
     flight_list.remove_ads()
